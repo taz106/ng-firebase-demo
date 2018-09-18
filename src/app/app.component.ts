@@ -14,11 +14,13 @@ export class AppComponent implements OnInit {
   welcomeTitle = 'Angular Firebase Todo';
   public todos: Array<object> = null;
   public title = '';
+  public userToken: string;
 
   constructor(
     private service: AppService,
     private ngFireDB: AngularFireDatabase,
-  ) {}
+    private ngFMessaging: AngularFireMessaging
+  ) { }
 
   ngOnInit() {
     this.service.getTodoList()
@@ -34,9 +36,17 @@ export class AppComponent implements OnInit {
         mergeMapTo(this.service.getToken())
       )
       .subscribe(
-        token => console.log('Permission granted', token),
+        token => {
+          this.userToken = token;
+          console.log(this.userToken);
+        },
         error => console.log(error)
       );
+
+    // this.ngFMessaging.messages
+    //   .subscribe(
+    //     message => console.log(message)
+    //   );
   }
 
   onTodoEnter(todoTitle: string) {
@@ -44,7 +54,16 @@ export class AppComponent implements OnInit {
       title: todoTitle,
       isCompleted: false
     };
-    this.service.addNewTodo(payload);
+    this.service.addNewTodo(payload)
+      .then(
+        res => {
+          console.log(res);
+          this.service.sendNotification(this.userToken)
+            .subscribe(
+              resIn => console.log(resIn)
+            );
+        }
+      );
   }
 
   removeTodo(key: string) {

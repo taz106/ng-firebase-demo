@@ -11,7 +11,9 @@ export const environment = {
     projectId: 'ng-firebase-demo1',
     storageBucket: 'ng-firebase-demo1.appspot.com',
     messagingSenderId: '32138512339'
-  }
+  },
+  // tslint:disable-next-line:max-line-length
+  fireBaseServerKey: 'AAAAB3uax9M:APA91bEBc1RpqdTnUNtn2bmR86qAG1TLUBndZvh0QSyi42LuSyGu3GQNCtq7caIgt2TvNykCGMA1ruNcBaVvuXE9wY3jou8kUS4j9Un-OceIEE2pUGFFherJ9c7HOdNB2IXG5-t6G-p8'
 };
 
 /*
